@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+	<div th:replace="/fragments/menu.html :: menu"></div>
+
+
+	<div class="container">
+
+       
+       
+       <p th:text="${error}" class="btn btn-alert"></p>
+       
+        <div sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
+	     <a href="add_inventory"><button type=button class="btn btn-default"> Add Inventory</button></a>
+          </div>
+		
+		<table class="table table-bordered table-striped">
+			<thead>
+			
+				<tr>
+					<th>Id</th>
+					<th>Order No</th>
+					<th>Order Date</th>
+					<th>Description</th>
+					<th>Officer</th>
+					<th>Amount</th>
+
+					<div sec:authorize="hasAnyAuthority('ROLE_ADMIN')"> 	
+					<th>Edit</th>
+					<th>Delete</th>
+					</div>
+				</tr>
+			</thead>
+
+			<tr th:each="odr :${orders}">
+				<td th:text="${odr.id}"></td>
+				
+	
+				<td th:text="${odr.orderno}"></td>
+				<td th:text="${odr.orderdate}"></td>
+				<td th:text="${odr.orderdescription}"></td>
+				<td th:text="${odr.officer}"></td>
+				<td th:text="${odr.orderamount}"></td>
+
+				      
+				     <div sec:authorize="hasAnyAuthority('ROLE_ADMIN')"> 
+				      <td>
+                      <a th:href="@{/edit/{id}(id=${odr.id})}"
+                         class="btn btn-primary">
+                          Edit
+                        </a>
+                      </td>
+				      <td>
+                      <a th:href="@{/delete/{id}(id=${odr.id})}"
+                         class="btn btn-primary">
+                          Del
+                         </a>
+                      </td>
+                      </div>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>

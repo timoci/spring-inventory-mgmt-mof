@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+	<div th:replace="/fragments/menu.html :: menu"></div>
+
+
+	<div class="container">
+
+       
+       
+       <p th:text="${error}" class="btn btn-alert"></p>
+       
+        <div sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
+	     <a href="add_inventory"><button type=button class="btn btn-default"> Add Inventory</button></a>
+          </div>
+		
+		<table class="table table-bordered table-striped">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Description</th>
+					<th>SN</th>
+					<th>Div</th>
+					<th>Cat</th>
+					<th>Status</th>
+					<th>Station</th>
+					<th>Cost</th>
+					<div sec:authorize="hasAnyAuthority('ROLE_ADMIN')"> 	
+					<th>Edit</th>
+					<th>Delete</th>
+					</div>
+				</tr>
+			</thead>
+
+			<tr th:each="inv :${inventorys}">
+				<td th:text="${inv.id}"></td>
+				
+	
+				<td th:text="${inv.description}"></td>
+				<td th:text="${inv.sn}"></td>
+				<td th:text="${inv.division}"></td>
+				<td th:text="${inv.category}"></td>
+				<td th:text="${inv.status}"></td>
+				<td th:text="${inv.station}"></td>					
+				<td th:text="${inv.cost}"></td>
+				      
+				     <div sec:authorize="hasAnyAuthority('ROLE_ADMIN')"> 
+				      <td>
+                      <a th:href="@{/edit/{id}(id=${inv.id})}"
+                         class="btn btn-primary">
+                          Edit
+                        </a>
+                      </td>
+				      <td>
+                      <a th:href="@{/delete/{id}(id=${inv.id})}"
+                         class="btn btn-primary">
+                          Del
+                         </a>
+                      </td>
+                      </div>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>
