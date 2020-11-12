@@ -1,0 +1,52 @@
+<div th:fragment="create_order_fragment">
+
+
+	<div class="login-form">
+	
+	
+		<form action="/order/ordersave" method="post">
+		
+			<h2 class="text-center">Add Orders</h2>
+			<div class="form-group">
+			
+		   <input type="text" id="id" name="id" class="form-control"
+					placeholder="Record Reference Number" required="required"/>
+			</div>
+			
+			<div class="form-group">
+				<input type="text" id="orderno" name="orderno" class="form-control"
+					placeholder="Order Number" required="required"/>
+			</div>
+			
+			<div class="form-group">
+				<input type="text" id="orderdate" name="orderdate" class="form-control"
+					placeholder="Order Date" required="required"/>
+			</div>			
+			
+			<div class="form-group">
+				<input type="text" id="orderdescription" name="orderdescription" class="form-control"
+					placeholder="Order Description" required="required"/>
+			</div>			
+
+			<div class="form-group">
+				<input type="text" id="officer" name="officer" class="form-control"
+					placeholder="Officer" required="required"/>
+			</div>			
+			
+			
+			
+			<div class="form-group">
+				<input type="text" class="form-control" name="orderamount"
+					placeholder="Order Amount" required="required"/>
+			</div>
+			
+						
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary btn-block">Submit</button>
+			</div>
+			
+		</form>
+
+	</div>
+
+</div>

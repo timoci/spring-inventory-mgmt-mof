@@ -39,13 +39,20 @@ public class OrderController {
 		return "order";
 	}
 	
+	
+	@GetMapping("/add_order") 
+	public String addOrder(Model model) {
+	
+		return "add_order";
+	}
+	
 	@PostMapping("/order/ordersave")
 	public String saveOrder(HttpServletRequest request,Model model) {
 		System.out.println("IN Orders");
 		//@ModelAttribute("order") Orders order
 		
 		  try {
-		long id=   Long.valueOf(request.getParameter("id"));
+			  long id=   Long.valueOf(request.getParameter("id"));
 		String orderno=request.getParameter("orderno");
 		String orderdate=request.getParameter("orderdate");
 		String orderdescription=request.getParameter("orderdescription");
@@ -61,7 +68,7 @@ public class OrderController {
 		orders.setOrderamount(Double.valueOf(orderamount));
 		orders.setOfficer(officer);
 		
-		
+		System.out.println("Orders Saved"+orders.toString());
 		Orders odr=orderRepository.save(orders);
 		
 		if(odr!=null)
@@ -78,7 +85,7 @@ public class OrderController {
 	        	System.out.println("ex"+ex);
 	        	model.addAttribute("error",ex);
 	        }
-		return "Orders";
+		return "order";
 	}
 	
 	
@@ -106,7 +113,7 @@ public class OrderController {
         	System.out.println("ex"+ex);
         	model.addAttribute("error",ex);
         }
-		return "Orders";
+		return "order";
 	}
 
 		//Need Model Object here to pass data to frontend

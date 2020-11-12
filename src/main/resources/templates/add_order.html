@@ -13,7 +13,7 @@
 </head>
 <body>
 
-	<div th:replace="/fragments/menu.html :: menu"></div>
+	<div th:replace="fragments/menu.html :: menu"></div>
 
 
 	<div class="container">
@@ -23,7 +23,7 @@
        <p th:text="${error}" class="btn btn-alert"></p>
        
 		<div
-			th:replace="/fragments/create_order.html :: create_order_fragment">
+			th:replace="fragments/create_order.html :: create_order_fragment">
 		</div>
 
 

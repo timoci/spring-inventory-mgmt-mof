@@ -1,6 +1,9 @@
 package com.forestry.inv.springsecurity.web;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.forestry.inv.model.Orders;
 import com.forestry.inv.springsecurity.model.Users;
 import com.forestry.inv.springsecurity.service.UserService;
 import com.forestry.inv.springsecurity.web.dto.UserRegistrationDto;
@@ -49,4 +53,16 @@ public class UserRegistrationController {
         return "redirect:/registration?success";
     }
 
+    @GetMapping("/role/{id}/{userrole}")
+    public String assignRole(@PathParam("id") Long id,@PathParam("userrole") String userrole) {
+    	
+    	  //userService.findById(id);
+        //  Optional<Orders> o= orderRepository.findById(id);
+		
+	//	Orders odr=o.get();
+		
+		
+    	 return "redirect:/registration?success";
+    }
+    
 }

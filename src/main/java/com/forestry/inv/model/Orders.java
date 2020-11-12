@@ -19,8 +19,6 @@ public class Orders {
 	private String officer;
 	private Double orderamount;
 	public Orders() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 	public long getId() {
 		return id;
@@ -57,6 +55,11 @@ public class Orders {
 	}
 	public void setOrderamount(Double orderamount) {
 		this.orderamount = orderamount;
+	}
+	@Override
+	public String toString() {
+		return "Orders [id=" + id + ", orderno=" + orderno + ", orderdate=" + orderdate + ", orderdescription="
+				+ orderdescription + ", officer=" + officer + ", orderamount=" + orderamount + "]";
 	}
 	
 

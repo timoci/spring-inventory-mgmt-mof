@@ -13,7 +13,7 @@
 </head>
 <body>
 
-	<div th:replace="/fragments/menu.html :: menu"></div>
+	<div th:replace="fragments/menu.html :: menu"></div>
 
 
 	<div class="container">
@@ -23,7 +23,7 @@
        <p th:text="${error}" class="btn btn-alert"></p>
        
         <div sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
-	     <a href="add_inventory"><button type=button class="btn btn-default"> Add Inventory</button></a>
+	     <a href="/add_order"><button type=button class="btn btn-default"> Add Orders</button></a>
           </div>
 		
 		<table class="table table-bordered table-striped">
@@ -57,13 +57,13 @@
 				      
 				     <div sec:authorize="hasAnyAuthority('ROLE_ADMIN')"> 
 				      <td>
-                      <a th:href="@{/edit/{id}(id=${odr.id})}"
+                      <a th:href="@{/order/edit/{id}(id=${odr.id})}"
                          class="btn btn-primary">
                           Edit
                         </a>
                       </td>
 				      <td>
-                      <a th:href="@{/delete/{id}(id=${odr.id})}"
+                      <a th:href="@{/order/delete/{id}(id=${odr.id})}"
                          class="btn btn-primary">
                           Del
                          </a>

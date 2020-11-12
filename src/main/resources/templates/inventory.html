@@ -13,7 +13,7 @@
 </head>
 <body>
 
-	<div th:replace="/fragments/menu.html :: menu"></div>
+	<div th:replace="fragments/menu.html :: menu"></div>
 
 
 	<div class="container">
@@ -22,7 +22,7 @@
        
        <p th:text="${error}" class="btn btn-alert"></p>
        
-        <div sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
+        <div sec:authorize="hasAnyAuthority('ROLE_INVENTORY')">
 	     <a href="add_inventory"><button type=button class="btn btn-default"> Add Inventory</button></a>
           </div>
 		
@@ -56,7 +56,7 @@
 				<td th:text="${inv.station}"></td>					
 				<td th:text="${inv.cost}"></td>
 				      
-				     <div sec:authorize="hasAnyAuthority('ROLE_ADMIN')"> 
+				     <div sec:authorize="hasAnyAuthority('ROLE_INVENTORY')"> 
 				      <td>
                       <a th:href="@{/edit/{id}(id=${inv.id})}"
                          class="btn btn-primary">
