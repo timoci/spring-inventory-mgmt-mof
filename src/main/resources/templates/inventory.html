@@ -22,7 +22,7 @@
        
        <p th:text="${error}" class="btn btn-alert"></p>
        
-        <div sec:authorize="hasAnyAuthority('ROLE_INVENTORY')">
+        <div sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_INVENTORY')">
 	     <a href="add_inventory"><button type=button class="btn btn-default"> Add Inventory</button></a>
           </div>
 		
@@ -37,7 +37,7 @@
 					<th>Status</th>
 					<th>Station</th>
 					<th>Cost</th>
-					<div sec:authorize="hasAnyAuthority('ROLE_ADMIN')"> 	
+					<div sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_INVENTORY')"> 	
 					<th>Edit</th>
 					<th>Delete</th>
 					</div>
@@ -56,7 +56,7 @@
 				<td th:text="${inv.station}"></td>					
 				<td th:text="${inv.cost}"></td>
 				      
-				     <div sec:authorize="hasAnyAuthority('ROLE_INVENTORY')"> 
+				     <div sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_INVENTORY')"> 
 				      <td>
                       <a th:href="@{/edit/{id}(id=${inv.id})}"
                          class="btn btn-primary">
