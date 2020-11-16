@@ -9,3 +9,4 @@ import com.forestry.inv.model.Inventory;
 public interface InventoryRepository extends JpaRepository<Inventory, Long>{
 
 }
+
