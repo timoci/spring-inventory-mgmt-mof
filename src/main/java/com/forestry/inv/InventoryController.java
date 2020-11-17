@@ -5,6 +5,10 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.forestry.inv.model.Inventory;
 import com.forestry.inv.model.repository.InventoryRepository;
@@ -30,15 +35,46 @@ public class InventoryController {
 	@GetMapping("/inventory") 
 	public String getInventory(Model model) {
 		//fetch list of inventorys
-		List<Inventory> listInventorys =inventoryRepository.findAll();
+		//List<Inventory> listInventorys =inventoryRepository.findAll();
+		
+		//Set the Model Object
+		//model.addAttribute("inventorys",listInventorys);
+		
+		//Here Return the name of HTML file or view file
+		return getInventoryPaginated(model,1,"id","ASC");
+	}
+	
+	@GetMapping("/inventory/page/{pageNumber}") 
+	public String getInventoryPaginated(Model model,@PathVariable("pageNumber") int currentPage,
+			@RequestParam(value = "sortField", defaultValue = "id") String sortField,
+			@RequestParam(value = "sortDirection", defaultValue = "ASC") String  sortDirection) {
+		//fetch list of inventorys
+		
+		 Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name())?Sort.by(sortField).ascending() 
+				 : Sort.by(sortField).descending();
+		
+		Pageable pageable = PageRequest.of(currentPage-1, 6,sort);
+		Page<Inventory> inventoryPage= inventoryRepository.findAll(pageable);
+		
+		long totalItems = inventoryPage.getTotalElements();
+		int totalPages = inventoryPage.getTotalPages();
+		
+		List<Inventory> listInventorys =inventoryPage.getContent();
 		
 		//Set the Model Object
 		model.addAttribute("inventorys",listInventorys);
+		model.addAttribute("currentPage",currentPage);
+		model.addAttribute("totalItems",totalItems);
+		model.addAttribute("totalPages",totalPages);
+	
+		    model.addAttribute("sortField", sortField);
+		    model.addAttribute("sortDir", sortDirection);
+		    model.addAttribute("reverseSortDir", sortDirection.equals("asc") ? "desc" : "asc");
+		
 		
 		//Here Return the name of HTML file or view file
 		return "inventory";
 	}
-	
 	
 	
 	@GetMapping("/add_inventory") 
@@ -80,10 +116,12 @@ public class InventoryController {
 		System.out.println("Inventory Saved"+inv);
 		
 		//fetch list of inventories
-		List<Inventory> listInventorys =inventoryRepository.findAll();
+		//List<Inventory> listInventorys =inventoryRepository.findAll();
 		
 		//Set the Model Object
-		model.addAttribute("inventorys",listInventorys);
+		//model.addAttribute("inventorys",listInventorys);
+		
+		getInventoryPaginated(model,1,"id","ASC");
 		
 		//Here Return the name of HTML file or view file
 		  } catch(Exception ex) {
@@ -107,10 +145,12 @@ public class InventoryController {
 		
 		inventoryRepository.delete(inv);
 		
-		List<Inventory> listInventorys =inventoryRepository.findAll();
+		//List<Inventory> listInventorys =inventoryRepository.findAll();
 		
 		//Set the Model Object
-		model.addAttribute("inventorys",listInventorys);
+		//model.addAttribute("inventorys",listInventorys);
+		
+		getInventoryPaginated(model,1,"id","ASC");
 		
 		//Here Return the name of HTML file or view file
         }

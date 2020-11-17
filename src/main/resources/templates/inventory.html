@@ -29,14 +29,33 @@
 		<table class="table table-bordered table-striped">
 			<thead>
 				<tr>
-					<th>Id</th>
-					<th>Description</th>
-					<th>SN</th>
-					<th>Div</th>
-					<th>Cat</th>
-					<th>Status</th>
-					<th>Station</th>
-					<th>Cost</th>
+					<th>
+					 <a th:href="@{'/inventory/page/' + ${currentPage} + '?sortField=id&sortDirection=' + ${reverseSortDir}}">Id</a>
+					</th>
+						
+					<th>
+					<a th:href="@{'/inventory/page/' + ${currentPage} + '?sortField=id&sortDirection=' + ${reverseSortDir}}">Description</a>
+					</th>
+					
+					<th>
+					<a th:href="@{'/inventory/page/' + ${currentPage} + '?sortField=id&sortDirection=' + ${reverseSortDir}}">SN</a>
+					</th>
+					<th>
+					<a th:href="@{'/inventory/page/' + ${currentPage} + '?sortField=id&sortDirection=' + ${reverseSortDir}}">Div</a>
+					</th>
+					<th>
+					<a th:href="@{'/inventory/page/' + ${currentPage} + '?sortField=id&sortDirection=' + ${reverseSortDir}}">Cat</a>
+					</th>
+					<th>
+					<a th:href="@{'/inventory/page/' + ${currentPage} + '?sortField=id&sortDirection=' + ${reverseSortDir}}">Status</a>
+					</th>
+					<th>
+					<a th:href="@{'/inventory/page/' + ${currentPage} + '?sortField=id&sortDirection=' + ${reverseSortDir}}">Station</a>
+					</th>
+					<th>
+					<a th:href="@{'/inventory/page/' + ${currentPage} + '?sortField=id&sortDirection=' + ${reverseSortDir}}">Cost</a>
+					</th>
+					
 					<div sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_INVENTORY')"> 	
 					<th>Edit</th>
 					<th>Delete</th>
@@ -72,6 +91,13 @@
                       </div>
 			</tr>
 		</table>
+		
+		      Total Items:[[${totalItems}]]  Page [[${currentPage}]] of  [[${totalPages}]] &nbsp - &nbsp
+       
+       <span th:each="i: ${#numbers.sequence(1,totalPages)}">
+       
+       <a th:href="@{'/inventory/page/' + ${i}}">[[${i}]]</a>&nbsp; &nbsp;</span>
+		
 	</div>
 </body>
 </html>
