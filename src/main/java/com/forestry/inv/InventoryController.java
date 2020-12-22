@@ -33,28 +33,38 @@ public class InventoryController {
 
 	//Need Model Object here to pass data to frontend
 	@GetMapping("/inventory") 
-	public String getInventory(Model model) {
-		//fetch list of inventorys
-		//List<Inventory> listInventorys =inventoryRepository.findAll();
+	public String getInventory(Model model,@RequestParam(value = "keyword", defaultValue = "de") String keyword) {
 		
-		//Set the Model Object
-		//model.addAttribute("inventorys",listInventorys);
 		
 		//Here Return the name of HTML file or view file
-		return getInventoryPaginated(model,1,"id","ASC");
+		
+		keyword=keyword.toLowerCase();
+		
+	    if(!keyword.equals("de")) {
+	    	return getInventoryPaginated2(model,1,"id","ASC",keyword);
+	    }else	
+	    	 getInventoryPaginated(model,1,"id","ASC","de");
+	    
+		return getInventoryPaginated(model,1,"id","ASC","de");
+	
 	}
 	
-	@GetMapping("/inventory/page/{pageNumber}") 
-	public String getInventoryPaginated(Model model,@PathVariable("pageNumber") int currentPage,
-			@RequestParam(value = "sortField", defaultValue = "id") String sortField,
-			@RequestParam(value = "sortDirection", defaultValue = "ASC") String  sortDirection) {
-		//fetch list of inventorys
+	
+	public String getInventoryPaginated2(Model model,int currentPage,String sortField,String sortDirection,String keyword) {
 		
+		
+		System.out.println("*** "+sortField+" "+sortDirection);
 		 Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name())?Sort.by(sortField).ascending() 
 				 : Sort.by(sortField).descending();
 		
-		Pageable pageable = PageRequest.of(currentPage-1, 6,sort);
-		Page<Inventory> inventoryPage= inventoryRepository.findAll(pageable);
+		Pageable pageable = PageRequest.of(currentPage-1, 5,sort);
+		
+		if(keyword!=null) {
+			keyword=keyword.toLowerCase();
+		}
+		
+		//Page<Inventory> inventoryPage= inventoryRepository.findAll(pageable);
+		Page<Inventory> inventoryPage=inventoryRepository.search(keyword, pageable);
 		
 		long totalItems = inventoryPage.getTotalElements();
 		int totalPages = inventoryPage.getTotalPages();
@@ -66,10 +76,48 @@ public class InventoryController {
 		model.addAttribute("currentPage",currentPage);
 		model.addAttribute("totalItems",totalItems);
 		model.addAttribute("totalPages",totalPages);
+		model.addAttribute("sortField", sortField);
+		model.addAttribute("sortDir", sortDirection);
+		model.addAttribute("reverseSortDir", sortDirection.equals("asc") ? "desc" : "asc");
+		
+		
+		//Here Return the name of HTML file or view file
+		return "inventory";
+	}
 	
-		    model.addAttribute("sortField", sortField);
-		    model.addAttribute("sortDir", sortDirection);
-		    model.addAttribute("reverseSortDir", sortDirection.equals("asc") ? "desc" : "asc");
+	@GetMapping("/inventory/page/{pageNumber}") 
+	public String getInventoryPaginated(Model model,@PathVariable("pageNumber") int currentPage,
+			@RequestParam(value = "sortField", defaultValue = "id") String sortField,
+			@RequestParam(value = "sortDirection", defaultValue = "ASC") String  sortDirection,
+			@RequestParam(value = "keyword", defaultValue = "de") String  keyword) {
+		
+		 Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name())?Sort.by(sortField).ascending() 
+				 : Sort.by(sortField).descending();
+		
+		Pageable pageable = PageRequest.of(currentPage-1, 5,sort);
+		Page<Inventory> inventoryPage=null;
+		
+		if(keyword.equalsIgnoreCase("de")) {
+		inventoryPage= inventoryRepository.findAll(pageable);
+		}else {
+	   inventoryPage=inventoryRepository.search(keyword, pageable);
+	   System.out.println("Inventory"+inventoryPage);
+		}
+		
+		long totalItems = inventoryPage.getTotalElements();
+		int totalPages = inventoryPage.getTotalPages();
+		
+		List<Inventory> listInventorys =inventoryPage.getContent();
+		System.out.println("Inventory"+listInventorys);
+		
+		//Set the Model Object
+		model.addAttribute("inventorys",listInventorys);
+		model.addAttribute("currentPage",currentPage);
+		model.addAttribute("totalItems",totalItems);
+		model.addAttribute("totalPages",totalPages);
+		model.addAttribute("sortField", sortField);
+		model.addAttribute("sortDir", sortDirection);
+		model.addAttribute("reverseSortDir", sortDirection.equals("asc") ? "desc" : "asc");
 		
 		
 		//Here Return the name of HTML file or view file
@@ -85,9 +133,8 @@ public class InventoryController {
 	
 	
 	@PostMapping("/inventorysave")
-	public String saveInventory(HttpServletRequest request,Model model) {
+	public String saveInventory(HttpServletRequest request, Model model) {
 		System.out.println("IN Inventory");
-		//@ModelAttribute("employee") Employee employee
 		
 		  try {
 		long id=   Long.valueOf(request.getParameter("id"));
@@ -115,13 +162,9 @@ public class InventoryController {
 		if(inv!=null)
 		System.out.println("Inventory Saved"+inv);
 		
-		//fetch list of inventories
-		//List<Inventory> listInventorys =inventoryRepository.findAll();
+		//getInventoryPaginated(model,1,"id","ASC");
 		
-		//Set the Model Object
-		//model.addAttribute("inventorys",listInventorys);
-		
-		getInventoryPaginated(model,1,"id","ASC");
+		getInventoryPaginated(model,1,"id","ASC","de");
 		
 		//Here Return the name of HTML file or view file
 		  } catch(Exception ex) {
@@ -132,7 +175,7 @@ public class InventoryController {
 	}
 	
 	
-	//Need Model Object here to pass data to frontend
+	//Need Model Object here to pass data to front end
 	 @RequestMapping(path = "/delete/{id}")
 	public String deleteInventory( @PathVariable("id") Long id,Model model) {
 		//fetch list of inventories
@@ -145,12 +188,7 @@ public class InventoryController {
 		
 		inventoryRepository.delete(inv);
 		
-		//List<Inventory> listInventorys =inventoryRepository.findAll();
-		
-		//Set the Model Object
-		//model.addAttribute("inventorys",listInventorys);
-		
-		getInventoryPaginated(model,1,"id","ASC");
+		getInventoryPaginated(model,1,"id","ASC","de");
 		
 		//Here Return the name of HTML file or view file
         }

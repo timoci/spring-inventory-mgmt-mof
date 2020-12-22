@@ -18,24 +18,59 @@
 
 	<div class="container">
 
-       <h1>Accounts Order Manager</h1>       
+       <h1>Order Manager</h1>       
        
        <p th:text="${error}" class="btn btn-alert"></p>
        
         <div sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_ACCOUNTS')">
 	     <a href="/add_order"><button type=button class="btn btn-default"> Add Orders</button></a>
           </div>
-		
+          &nbsp;
+          &nbsp;
+          
+     <div>
+     	<form action ="">
+      		Filter <input type = "text" name = "keyword"/>
+      		&nbsp;
+      		<input type = "submit" value = "Search"/>
+      		&nbsp;
+      		<input type = "button" value = "Clear"/>
+      		&nbsp;  		
+      		
+      	</form>
+     </div>
+     
+		&nbsp;
+		&nbsp;
 		<table class="table table-bordered table-striped">
 			<thead>
 			
 				<tr>
-					<th>Id</th>
-					<th>Order No</th>
-					<th>Order Date</th>
-					<th>Description</th>
-					<th>Officer</th>
-					<th>Amount</th>
+					<th>
+					<a th:href="@{'/order/page/' + ${currentPage} + '?sortField=id&sortDirection=' + ${reverseSortDir}}">Id</a>
+					</th>
+					
+					<th>
+					<a th:href="@{'/order/page/' + ${currentPage} + '?sortField=id&sortDirection=' + ${reverseSortDir}}">Order No</a>
+					</th>
+					
+					<th>
+					<a th:href="@{'/order/page/' + ${currentPage} + '?sortField=id&sortDirection=' + ${reverseSortDir}}">Description</a>
+					</th>
+										
+					<th>
+					<a th:href="@{'/order/page/' + ${currentPage} + '?sortField=id&sortDirection=' + ${reverseSortDir}}">Order Date</a>
+					</th>
+					
+					<th>
+					<a th:href="@{'/order/page/' + ${currentPage} + '?sortField=id&sortDirection=' + ${reverseSortDir}}">Amount</a>
+					</th>
+					
+					<th>
+					<a th:href="@{'/order/page/' + ${currentPage} + '?sortField=id&sortDirection=' + ${reverseSortDir}}">Officer</a>
+					</th>
+					
+
 
 					<div sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_ACCOUNTS')"> 	
 					<th>Edit</th>
@@ -49,10 +84,11 @@
 				
 	
 				<td th:text="${odr.orderno}"></td>
-				<td th:text="${odr.orderdate}"></td>
 				<td th:text="${odr.orderdescription}"></td>
-				<td th:text="${odr.officer}"></td>
+				<td th:text="${odr.orderdate}"></td>
 				<td th:text="${odr.orderamount}"></td>
+				<td th:text="${odr.officer}"></td>
+				
 
 				      
 				     <div sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_ACCOUNTS')"> 
@@ -71,6 +107,42 @@
                       </div>
 			</tr>
 		</table>
+	       
+       
+       
+       		      Total Items:[[${totalItems}]]  Page [[${currentPage}]] of  [[${totalPages}]] &nbsp - &nbsp
+  
+  				<!-- Set up the First page link -->	
+		<a th:if="${currentPage > 1}" th:href="@{'/order/page/1'}">First</a>
+		<span th:unless="${currentPage > 1}">First</span>
+	
+	
+		<!-- Set up the Previous page link -->	      
+		<a th:if="${currentPage > 1}" th:href="@{'/order/page/' + ${currentPage - 1}}">Previous  </a>
+		<span th:unless="${currentPage > 1}">Previous</span>
+  
+       
+		<!-- Set up the link for all other pages  -->	
+		<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+    	<a th:if="${currentPage != i}" th:href="@{'/order/page/' + ${i}}">[[${i}]]</a>
+    	<span th:unless="${currentPage != i}">[[${i}]]</span>
+   		&nbsp;
+		</span>
+		
+		       
+ 		<!-- Set up the Next page link -->	
+		<a th:if="${currentPage < totalPages}" th:href="@{'/order/page/' + ${currentPage + 1}}">Next  </a>
+		<span th:unless="${currentPage < totalPages}">Next</span>
+ 
+ 		<!-- Set up the Last page link -->	
+		<a th:if="${currentPage < totalPages}" th:href="@{'/order/page/' + ${totalPages}}">Last</a>
+		<span th:unless="${currentPage < totalPages}">Last</span>
+ 	      
+       
+       
+       
+       
+       
 	</div>
 </body>
 </html>

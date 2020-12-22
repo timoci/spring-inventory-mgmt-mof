@@ -21,87 +21,43 @@ public class Inventory {
 	private String status;
 	private String station;
 	
-
 	
 	public long getId() {
 		return id;
 	}
-
-
-
-
-
 
 	public void setId(long id) {
 		this.id = id;
 	}
 
 
-
-
-
-
 	public String getDescription() {
 		return description;
 	}
-
-
-
-
-
 
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
-
-
-
-
-
 	public String getSn() {
 		return sn;
 	}
-
-
-
-
-
 
 	public void setSn(String sn) {
 		this.sn = sn;
 	}
 
-
-
-
-
-
 	public String getDivision() {
 		return division;
 	}
-
-
-
-
-
 
 	public void setDivision(String division) {
 		this.division = division;
 	}
 
-
-
-
-
-
 	public String getCategory() {
 		return category;
 	}
-
-
-
-
 
 
 	public void setCategory(String category) {
@@ -109,63 +65,31 @@ public class Inventory {
 	}
 
 
-
-
-
-
 	public Double getCost() {
 		return cost;
 	}
-
-
-
-
 
 
 	public void setCost(Double cost) {
 		this.cost = cost;
 	}
 
-
-
-
-
-
+	
 	public String getStatus() {
 		return status;
 	}
-
-
-
-
-
 
 	public void setStatus(String status) {
 		this.status = status;
 	}
 
-
-
-
-
-
 	public String getStation() {
 		return station;
 	}
 
-
-
-
-
-
 	public void setStation(String station) {
 		this.station = station;
 	}
-
-
-
-
-
 
 	@Override
 	public String toString() {

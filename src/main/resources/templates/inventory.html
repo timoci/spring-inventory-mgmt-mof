@@ -17,14 +17,30 @@
 
 
 	<div class="container">
-
-       <h1>IT Inventory Manager</h1>
-       
+	
+	<div >
+       <h1>Inventory Manager</h1>
        <p th:text="${error}" class="btn btn-alert"></p>
-       
-        <div sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_INVENTORY')">
+     </div>
+     
+     <div sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_INVENTORY')">
 	     <a href="add_inventory"><button type=button class="btn btn-default"> Add Inventory</button></a>
-          </div>
+          </div>     &nbsp;
+          
+     <div>
+     	<form action ="/inventory">
+      		Filter <input type = "text" name = "keyword" required/>
+      		&nbsp;
+      		<input type = "submit" value = "Search"/>
+      		&nbsp;
+      		<input type = "button" value = "Clear"/>
+      		&nbsp;
+      	</form>
+     </div>    
+          
+    &nbsp;
+    &nbsp;
+          
 		
 		<table class="table table-bordered table-striped">
 			<thead>
@@ -93,11 +109,34 @@
 		</table>
 		
 		      Total Items:[[${totalItems}]]  Page [[${currentPage}]] of  [[${totalPages}]] &nbsp - &nbsp
-       
-       <span th:each="i: ${#numbers.sequence(1,totalPages)}">
-       
-       <a th:href="@{'/inventory/page/' + ${i}}">[[${i}]]</a>&nbsp; &nbsp;</span>
+		      
+		<!-- Set up the First page link -->	
+		<a th:if="${currentPage > 1}" th:href="@{'/inventory/page/1'}">First</a>
+		<span th:unless="${currentPage > 1}">First</span>
+	
+	
+		<!-- Set up the Previous page link -->	      
+		<a th:if="${currentPage > 1}" th:href="@{'/inventory/page/' + ${currentPage - 1}}">Previous  </a>
+		<span th:unless="${currentPage > 1}">Previous</span>
 		
+	
+		<!-- Set up the link for all other pages  -->	
+		<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+    	<a th:if="${currentPage != i}" th:href="@{'/inventory/page/' + ${i}}">[[${i}]]</a>
+    	<span th:unless="${currentPage != i}">[[${i}]]</span>
+   		&nbsp;
+		</span>
+		
+
+		<!-- Set up the Next page link -->	
+		<a th:if="${currentPage < totalPages}" th:href="@{'/inventory/page/' + ${currentPage + 1}}">Next  </a>
+		<span th:unless="${currentPage < totalPages}">Next</span>
+ 
+ 		<!-- Set up the Last page link -->	
+		<a th:if="${currentPage < totalPages}" th:href="@{'/inventory/page/' + ${totalPages}}">Last</a>
+		<span th:unless="${currentPage < totalPages}">Last</span>
+ 	
+ 	
 	</div>
 </body>
 </html>
