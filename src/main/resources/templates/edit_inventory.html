@@ -18,50 +18,65 @@
 
 		<form action="/inventorysave" th:object="${inventory}" method="post">
 			<h2 class="text-center">Edit Inventory</h2>
-			<div class="form-group">
 			
-		   <input type="text" id="id" name="id"  th:field="*{id}" class="form-control"
-					placeholder="Inventory Id in Numbers" required="required"/>
+			<div class="form-group">
+				<div class="col-sm-2" >ID</div>
+    			<div class="col-sm-10" >
+    			<input type="text" id="id" name="id"  th:field="*{id}" class="form-control"	placeholder="Inventory Id in Numbers" required="required"/>
+				</div>
 			</div>
 			
 			<div class="form-group">
-				<input type="text" id="description" name="description"  th:field="*{description}" class="form-control"
+			  	<div class="col-sm-2">Description</div>
+  				<div class="col-sm-10">
+  				<input type="text" id="description" name="description"  th:field="*{description}" class="form-control"
 					placeholder="Item Description" required="required"/>
+				</div>
 			</div>
 			
 			<div class="form-group">
-				<input type="text" id="sn" name="sn"  th:field="*{sn}" class="form-control"
-					placeholder="Item Serial No" required="required"/>
+			  	<div class="col-sm-2">SN</div>
+  				<div class="col-sm-10">
+  				<input type="text" id="sn" name="sn"  th:field="*{sn}" class="form-control"
+					placeholder="Item Serial No" required="required"/></div>
 			</div>
 			
 			<div class="form-group">
-				<input type="text" id="division" name="division"  th:field="*{division}" class="form-control"
-					placeholder="Division" required="required"/>
+			  	<div class="col-sm-2">Division</div>
+  				<div class="col-sm-10">
+  				<input type="text" id="division" name="division"  th:field="*{division}" class="form-control"
+					placeholder="Division" required="required"/></div>
 			</div>
 
 			<div class="form-group">
-				<input type="text" id="category" name="category"  th:field="*{category}" class="form-control"
-					placeholder="Item Category" required="required"/>
+			  	<div class="col-sm-2">Category</div>
+  				<div class="col-sm-10"><input type="text" id="category" name="category"  th:field="*{category}" class="form-control"
+					placeholder="Item Category" required="required"/></div>
 			</div>
 			
 			<div class="form-group">
-				<input type="text" class="form-control" name="cost" th:field="*{cost}"
-					placeholder="Item Cost" required="required"/>
+			 	 <div class="col-sm-2">Cost</div>
+ 				 <div class="col-sm-10"><input type="text" class="form-control" name="cost" th:field="*{cost}"
+					placeholder="Item Cost" required="required"/></div>
 			</div>
 			
 			
 			<div class="form-group">
-				<input type="text" id="status" name="status"  th:field="*{status}" class="form-control"
-					placeholder="Item Status" required="required"/>
+			  	<div class="col-sm-2">Status</div>
+  				<div class="col-sm-10"><input type="text" id="status" name="status"  th:field="*{status}" class="form-control"
+					placeholder="Item Status" required="required"/></div>
 			</div>
 			
 			<div class="form-group">
-				<input type="text" id="station" name="station"  th:field="*{station}" class="form-control"
-					placeholder="Station" required="required"/>
+			  	<div class="col-sm-2">Station</div>
+  				<div class="col-sm-10"><input type="text" id="station" name="station"  th:field="*{station}" class="form-control"
+					placeholder="Station" required="required"/></div>
 			</div>
 						
 			<div class="form-group">
-				<button type="submit" class="btn btn-primary btn-block">Submit</button>
+			<div class="col-sm-4"></div>
+			<div class="col-sm-4"><button type="submit" class="btn btn-primary btn-block">Submit</button></div>
+			<div class="col-sm-4"></div>	
 			</div>
 
 		</form>
