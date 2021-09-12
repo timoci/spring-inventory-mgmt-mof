@@ -22,7 +22,7 @@
        
        <p th:text="${error}" class="btn btn-alert"></p>
        
-        <div sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_ACCOUNTS')">
+        <div sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_ORDERS')">
 	     <a href="/add_order"><button type=button class="btn btn-default"> Add Orders</button></a>
           </div>
           &nbsp;
